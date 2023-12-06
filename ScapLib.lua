@@ -125,6 +125,8 @@ function Library:CreatePage(PageName: string)
 					KeybindVisual.Click.Text	= tostring(Key):gsub("Enum.KeyCode.", "")
 					
 					if Callback then
+						task.wait(0.1)
+						
 						Callback(Key)
 					end
 					
