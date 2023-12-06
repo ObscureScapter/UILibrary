@@ -119,7 +119,7 @@ function Library:CreatePage(PageName: string)
 			
 			local WaitForInput
 			WaitForInput	= UserInputService.InputBegan:Connect(function(Input: InputObject)
-				if Input and Input.KeyCode then
+				if Input and Input.KeyCode and Input.KeyCode ~= Enum.KeyCode.Unknown then
 					Key	= Input.KeyCode
 					KeybindVisual.Click.Text	= tostring(Key):gsub("Enum.KeyCode.", "")
 					
