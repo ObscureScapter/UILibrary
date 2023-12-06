@@ -9,13 +9,14 @@ local UserInputService	= game:GetService("UserInputService")
 --	variables
 
 local Player	= Players.LocalPlayer
-local Assets	= game:GetObjects("rbxassetid://15561945238")[1]
+local Assets	= RunService:IsStudio() and script:WaitForChild("Assets") or game:GetObjects("rbxassetid://15561945238")[1]
 local UI	= Assets.ScapLib
 local Tab	= Assets.Tab
 local Page	= Assets.Page
 local Input	= Assets.Input
 local Slider	= Assets.Slider
 local Toggle	= Assets.Toggle
+local Dropdown	= Assets.Dropdown
 local Keybind	= Assets.Keybind
 local Library = {}
 local FirstPage	= false
@@ -131,7 +132,92 @@ function Library:CreatePage(PageName: string)
 			end)
 		end)
 	end
+	
+	--	// Handle Dropdowns
+	NewPage.CreateDropdown	= function(Description: string, Selected: string, Entries: table, Callback: any)
+		local IsOpen	= false
+		local isClosing	= false
+		local DropdownSendback	= {}
+		local EntryButtons	= {}
 		
+		local DropdownVisual	= Dropdown:Clone()
+		DropdownVisual.Click.Text	= Selected
+		DropdownVisual.Description.Text	= Description
+		DropdownVisual.Parent	= PageVisual
+		
+		local ArrowOpen	= TweenService:Create(DropdownVisual.Click.Drop, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+			Rotation	= 180,
+		})
+		local ArrowClose	= TweenService:Create(DropdownVisual.Click.Drop, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+			Rotation	= 0,
+		})
+		
+		local function Close()
+			IsOpen	= false
+			
+			if not isClosing	 then
+				isClosing	= true
+				DropdownVisual.Click.List:TweenSize(UDim2.new(0.9, 0, 0, 0), "Out", "Linear", 0.1, true)
+
+				task.wait(0.1)
+				if not IsOpen then
+					DropdownVisual.Click.List.Visible	= false
+				end
+				isClosing	= false
+			end
+
+			ArrowOpen:Pause()
+			ArrowClose:Play()
+		end
+		
+		local function CreateEntry(Entry: string)
+			local NewEntry	= Assets.Entry:Clone()
+			NewEntry.Text	= Entry
+			NewEntry.Parent	= DropdownVisual.Click.List
+
+			NewEntry.MouseButton1Down:Connect(function()
+				DropdownVisual.Click.Text	= Entry
+
+				Callback(Entry)
+				Close()
+			end)
+			
+			EntryButtons[Entry]	= NewEntry
+		end
+		
+		for _,v in Entries do
+			CreateEntry(v)
+		end
+		
+		DropdownVisual.Click.MouseButton1Down:Connect(function()
+			IsOpen	= not IsOpen
+			
+			if IsOpen then
+				DropdownVisual.Click.List.Visible	= true
+				DropdownVisual.Click.List:TweenSize(UDim2.new(0.9, 0, 10, 0), "Out", "Linear", 0.1, true)
+				
+				ArrowClose:Pause()
+				ArrowOpen:Play()
+			else
+				Close()
+			end
+		end)
+		
+		function DropdownSendback:NewEntry(Entry: string)
+			if not table.find(EntryButtons, Entry) then
+				CreateEntry(Entry)
+			end
+		end
+		
+		function DropdownSendback:RemoveEntry(Entry: string)
+			if EntryButtons[Entry] then
+				EntryButtons[Entry]:Destroy()
+				EntryButtons[Entry]	= nil
+			end
+		end
+		
+		return DropdownSendback
+	end	
 		
 	--	// Handle Sliders
 	NewPage.CreateSlider	= function(Description: string, Start: number, Minimum: number, Maximum: number, Callback: any)
