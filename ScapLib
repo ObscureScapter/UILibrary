@@ -323,4 +323,5 @@ function Library:CreatePage(PageName: string)
 	return NewPage
 end
 
+Library.Window	= UI
 return Library
