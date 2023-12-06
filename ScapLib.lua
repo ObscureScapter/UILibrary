@@ -107,11 +107,6 @@ function Library:CreatePage(PageName: string)
 		UI.Parent	= GetUIParent()
 	end
 	
-	--	// Handle UI Hiding
-	NewPage.ToggleUI	= function()
-		UI.Enabled	= not UI.Enabled
-	end
-	
 	--	// Handle Keybind Inputs
 	NewPage.CreateKeybind	= function(Description: string, Key: Enum.KeyCode, Callback: any)
 		local KeybindVisual	= Keybind:Clone()
@@ -323,5 +318,9 @@ function Library:CreatePage(PageName: string)
 	return NewPage
 end
 
-Library.Window	= UI
+--	// Handle UI Hiding
+function Library:ToggleUI()
+	UI.Enabled	= not UI.Enabled
+end
+
 return Library
