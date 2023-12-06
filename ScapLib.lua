@@ -70,6 +70,7 @@ function Library:CreatePage(PageName: string)
 	
 	--	// Building Visuals
 	local TabVisual	= Tab:Clone()
+	TabVisual.LayoutOrder	= MyPage
 	TabVisual.Visible	= true
 	TabVisual.Highlight.BackgroundColor3	= not FirstPage and Color3.fromRGB(85, 255, 127) or TabVisual.Highlight.BackgroundColor3
 	TabVisual.Highlight.Size	= UDim2.new(not FirstPage and 0.6 or 0, 0, 0.05, 0)
