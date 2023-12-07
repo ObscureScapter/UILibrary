@@ -18,6 +18,7 @@ local Slider	= Assets.Slider
 local Toggle	= Assets.Toggle
 local Dropdown	= Assets.Dropdown
 local Keybind	= Assets.Keybind
+local Divider	= Assets.Divider
 local Library = {}
 local FirstPage	= false
 local PageCount	= 0
@@ -106,6 +107,12 @@ function Library:CreatePage(PageName: string)
 	if not FirstPage then
 		FirstPage	= true
 		UI.Parent	= GetUIParent()
+	end
+	
+	--	// Add Dividers For Sub-Categories
+	NewPage.AddDivider	= function()
+		local DividerVisual	= Assets.Divider:Clone()
+		DividerVisual.Parent	= PageVisual
 	end
 	
 	--	// Handle Keybind Inputs
