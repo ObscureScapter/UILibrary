@@ -19,6 +19,7 @@ local Toggle	= Assets.Toggle
 local Dropdown	= Assets.Dropdown
 local Keybind	= Assets.Keybind
 local Divider	= Assets.Divider
+local Button	= Assets.Button
 local Library = {}
 local FirstPage	= false
 local PageCount	= 0
@@ -271,6 +272,20 @@ function Library:CreatePage(PageName: string)
 				Callback(InputVisual.Click.Text)
 			end
 		end)
+	end
+	
+	--	// Handle Click Buttons
+	NewPage.CreateButton	= function(Description: string, Callback: any)
+		local NewButton	= Button:Clone()
+		NewButton.Description.Text	= Description
+		
+		NewButton.Click.MouseButton1Down:Connect(function()
+			if Callback then
+				Callback()
+			end
+		end)
+		
+		NewButton.Parent	= PageVisual
 	end
 	
 	--	// Handle Toggle Buttons
