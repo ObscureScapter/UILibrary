@@ -54,15 +54,16 @@ end
 UI.Base.Ignore.Drag.MouseButton1Down:Connect(function()
 	local StartingPos	= UserInputService:GetMouseLocation()
 	local UIStart	= UI.Base.Position
+	local RealSize = UI.AbsoluteSize
 	
-	task.wait(0.3)
+	task.wait(0.2)
 	while RunService.RenderStepped:Wait() and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
 		local NewPosition	= UserInputService:GetMouseLocation()
 		local DragOffset	= (NewPosition-StartingPos)
-		local OffsetX	= (DragOffset.X/UI.Base.Pages.Slide.AbsoluteSize.X)/2.5
-		local OffsetY	= (DragOffset.Y/UI.Base.Pages.Slide.AbsoluteSize.Y)/2.5
+		local OffsetX	= (DragOffset.X/RealSize.X)
+		local OffsetY	= (DragOffset.Y/RealSize.Y)
 		
-		UI.Base:TweenPosition(UIStart + UDim2.new(OffsetX, 0, OffsetY, 0), "Out", "Linear", 0.1, true)
+		UI.Base:TweenPosition(UIStart + UDim2.new(OffsetX, 0, OffsetY, 0), "Out", "Linear", 0.05, true)
 	end
 end)
 
