@@ -117,6 +117,12 @@ function Library:CreatePage(PageName: string)
 		DividerVisual.Parent	= PageVisual
 	end
 	
+	NewPage.CreateLabel = function(Description: string)
+		local NewLabel = Assets.Label:Clone()
+		NewLabel.Description.Text = Description
+		NewLabel.Parent= PageVisual
+	end
+	
 	--	// Handle Keybind Inputs
 	NewPage.CreateKeybind	= function(Description: string, Key: Enum.KeyCode, Callback: any)
 		local KeybindVisual	= Keybind:Clone()
