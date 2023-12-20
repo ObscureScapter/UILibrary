@@ -125,7 +125,7 @@ function Library:CreatePage(PageName: string)
 		NewLabel.Parent= PageVisual
 		
 		Callback.Update = function(NewDescription: string)
-			NewLabel.Text	= NewDescription
+			NewLabel.Description.Text	= NewDescription
 		end
 		
 		return Callback
