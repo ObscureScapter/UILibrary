@@ -118,9 +118,17 @@ function Library:CreatePage(PageName: string)
 	end
 	
 	NewPage.CreateLabel = function(Description: string)
+		local Callback	= {}
+		
 		local NewLabel = Assets.Label:Clone()
 		NewLabel.Description.Text = Description
 		NewLabel.Parent= PageVisual
+		
+		Callback.Update = function(NewDescription: string)
+			NewLabel.Text	= NewDescription
+		end
+		
+		return Callback
 	end
 	
 	--	// Handle Keybind Inputs
