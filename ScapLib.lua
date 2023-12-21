@@ -56,7 +56,7 @@ UI.Base.Ignore.Drag.MouseButton1Down:Connect(function()
 	local UIStart	= UI.Base.Position
 	local RealSize = UI.AbsoluteSize
 	
-	task.wait(0.2)
+	task.wait(0.5)
 	while RunService.RenderStepped:Wait() and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
 		local NewPosition	= UserInputService:GetMouseLocation()
 		local DragOffset	= (NewPosition-StartingPos)
