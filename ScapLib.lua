@@ -325,7 +325,6 @@ function Library:CreatePage(PageName: string)
 		})
 
 		local StateChange	= Instance.new("BoolValue")
-		StateChange.Value	= Status
 		StateChange:GetPropertyChangedSignal("Value"):Connect(function()
 			if StateChange.Value then
 				OffTween:Pause()
@@ -341,6 +340,7 @@ function Library:CreatePage(PageName: string)
 				OffGradientTween:Play()
 			end
 		end)
+		StateChange.Value	= Status
 
 		ToggleVisual.Click.MouseButton1Down:Connect(function()
 			Status	= not Status
