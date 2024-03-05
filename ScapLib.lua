@@ -340,7 +340,6 @@ function Library:CreatePage(PageName: string)
 				OffGradientTween:Play()
 			end
 		end)
-		StateChange.Value	= Status
 
 		ToggleVisual.Click.MouseButton1Down:Connect(function()
 			Status	= not Status
@@ -352,6 +351,7 @@ function Library:CreatePage(PageName: string)
 		end)
 
 		ToggleVisual.Parent	= PageVisual
+		StateChange.Value	= Status
 	end
 	
 	PageCount	+= 1
