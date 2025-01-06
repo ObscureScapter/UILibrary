@@ -261,7 +261,7 @@ function Library:CreatePage(PageName: string)
 				local RelativeUI	= (MousePos-SliderVisual.Slider.AbsolutePosition)
 				local NewX	= math.clamp(RelativeUI.X, 0, SliderVisual.Slider.AbsoluteSize.X)
 				local ToScale	= NewX/SliderVisual.Slider.AbsoluteSize.X
-				Start	= math.clamp(math.floor(Maximum*ToScale), Minimum, Maximum)
+				Start	= math.clamp(Maximum*ToScale, Minimum, Maximum)
 
 				SliderVisual.Slider.Progress.Text	= Start.."/"..Maximum
 				SliderVisual.Slider.Filler:TweenSize(UDim2.new(ToScale, 0, 0.85, 0), "Out", "Linear", 0.1, true)
