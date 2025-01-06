@@ -50,6 +50,10 @@ local function ChangePage(PageOffset: number, Tab: TextButton)
 	end
 end
 
+local function roundNumber(num, numDecimalPlaces)
+  return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
 --	// Handle Window Dragging
 UI.Base.Ignore.Drag.MouseButton1Down:Connect(function()
 	local StartingPos	= UserInputService:GetMouseLocation()
@@ -261,7 +265,7 @@ function Library:CreatePage(PageName: string)
 				local RelativeUI	= (MousePos-SliderVisual.Slider.AbsolutePosition)
 				local NewX	= math.clamp(RelativeUI.X, 0, SliderVisual.Slider.AbsoluteSize.X)
 				local ToScale	= NewX/SliderVisual.Slider.AbsoluteSize.X
-				Start	= math.clamp(Maximum*ToScale, Minimum, Maximum)
+				Start	= math.clamp(roundNumber(Maximum*ToScale, 2), Minimum, Maximum)
 
 				SliderVisual.Slider.Progress.Text	= Start.."/"..Maximum
 				SliderVisual.Slider.Filler:TweenSize(UDim2.new(ToScale, 0, 0.85, 0), "Out", "Linear", 0.1, true)
